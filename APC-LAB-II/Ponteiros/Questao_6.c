@@ -12,16 +12,22 @@ float calculo(int *l,int *m, float *p,float *raio, float *altura){
     altura = altura do tanque de combustivel cilíndrico.
     */
 
-    float area,litros_total,latas_total;
+    float area,litros_total,latas_total,custo_total;
     system("cls");
     printf("Cálculo!");
 
-    area = 2*M_PI*(*raio)*((*altura)+(*raio));
+    area = 2*M_PI*(*raio)*((*altura)+(*raio)); //M_PI busca na biblioteca math.h o valor de PI.
     litros_total = area / *m;
     latas_total = litros_total / *l;
+    custo_total = latas_total *(*p);
 
-    printf("\n\nAREA: %1.2f",area);
-    printf("\nLitros: %1.2f  |   Latas: %1.2f",litros_total,latas_total);
+    printf("\nRaio digitado: %1.2fm.",*raio);
+    printf("\nAltura digitada: %1.2fm.",*altura);
+    printf("\n\nArea do cilíndro: %1.2fm².",area);
+    printf("\nLitros necessários: %1.2fL.",litros_total);
+    printf("\nLatas necessárias: %1.2f latas.",latas_total);
+    printf("\nCusto total: R$%1.2f.",custo_total);
+    printf("\n\n");
 
 }
 
@@ -39,9 +45,9 @@ int main(){
 
     system("cls");
     printf("Utilize vírgula para separação decimal!\n");
-    printf("Digite o valor (cm) do raio do tanque de combustível: ");
+    printf("Digite o valor do raio(metros) do tanque de combustível: ");
     scanf("%f",&raio);
-    printf("Digite a altura (cm) do tanque de combustível: ");
+    printf("Digite a altura(metros) do tanque de combustível: ");
     scanf("%f",&altura);
 
     calculo(&qtd_litros,&metros_quadrados,&preco_lata_de_tinta,&raio,&altura);
