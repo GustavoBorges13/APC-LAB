@@ -1,8 +1,6 @@
 #include <stdio.h>
 int soma(int num){
-    if(num==1) return 1;
-    else
-        return (num+soma(num-1));
+    return num;
 }
 
 main(){

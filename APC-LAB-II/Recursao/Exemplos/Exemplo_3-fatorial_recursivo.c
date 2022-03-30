@@ -5,7 +5,14 @@ int fat(int num){
     else
         return num*fat(num-1);
 }
-
+/* ou poderia usar:
+int fat(int num){
+    int i,f=1;
+    for(i=1;i<=num;i++)
+        f=f*i;
+    return f;
+}
+*/
 main() {
     int m;
     printf("\n Insira um número: ");
