@@ -1,21 +1,17 @@
 #include <stdio.h>
-#include <conio.h>
+#include <stdlib.h>
 
-int imprime(char num[100],int i) {
-    return num[i];
+int potencia(int x, int y){
+    if(y == 0)
+        return 1;
+    else
+        return x * potencia(x, y - 1);
 }
 
-main() {
-    setlocale(LC_ALL, "Portuguese");
-    int x,y,z;
-    char str[100];
-    printf("\n Insira um número qualquer inteiro: ");
-    scanf("%s",str);
-    printf(" Total de digitos: %d\n", strlen(str));
-    printf(" Resultado com a função recursiva: ");
-    for(i=0;i<=strlen(str);i++)
-        printf("%c", imprime(str,i));
-
-    printf("\nObs.: os pontos foram considerados como digitos.")
+int main () {
+    int y, x;
+    printf("Digite o valor para X e para N: ");
+    scanf("%d%d", &x, &y);
+    printf("Resultado de %d elevado a %d: %d\n", x, y, potencia(x, y));
     return 0;
 }
