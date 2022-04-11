@@ -1,0 +1,11 @@
+
+
+Cadastro de numero 1
+Numero registro: 41
+Nome: GUSTAVO
+Sexo: M
+Data de Nascimento: 23 8 2002
+Idade: 20
+CPF: 7171711771
+Endereco: RUA VEREAD....
+Telefone: 3232 23

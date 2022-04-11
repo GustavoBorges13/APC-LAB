@@ -111,7 +111,7 @@ void add_contato(){
 
 /* Menu principal feito para fornecer ao usuário logado as funcionalidades do sistema, onde o mesmo digita o número referente a opção que deseja executar*/
 void menu_principal(){
-
+    system("cls");
     //declaração da variável que será utilizada no switch case.
     int op;
 
@@ -149,61 +149,78 @@ void menu_principal(){
         case 8:
         exit(0);
     }
+}    
+
+/*
+FILE* arquivo;
+agenda in;
+char nome[20];
+
+arquivo = fopen("Agenda.csv","rb");
+
+printf("Nome: ");
+fflush(stdin);
+gets(nome);
+
+while ( fread(&in,sizeof(agenda),1,arquivo)==1){
+
+    if(strcmp(nome,in.nome)==0)
+    {
+        printf("%s|E-Mail: %s| CEP:%s | (%d)%d | %d/%d/%d |\n" , in.nome , in.mail , in.cep , in.tel.DDD , in.tel.numero , in.niver.dia , in.niver.mes , in.niver.ano ,in.descricao);
+    }
 }
 
-/*função valida_login. Utilizada para confirmar se o login e senha digitados pelo usuário são válidos, ou seja, se são iguais ao .txt*/
+fclose(arquivo);
+}
+
+*/
+
 void valida_login(){
-     // declaração de variáveis
-    char login[10];
-    char loginDigitado[10];
-    char senha[10];
-    char senhaDigitada[10];
+    system("cls");
+    printf("Acesso restrito! Realize o LOGIN p/continuar.\n");
+    char usuario_digitado[32],senha_digitada[32];
+    char user_validar[32],password_validar[32];
+    char conteudo[100];
 
-    //criação do ponteiro do arquivo e abertura do mesmo para leitura.
-    FILE *pontarq;
-    pontarq = fopen("logins.txt","r");
+    FILE *arquivo = fopen("login.txt","r");
 
-    //confção if que indica se o arquivo apresentou erro em sua abertura.
-    if(pontarq==NULL){
-        printf("Erro na abertura do arquivo de login!\n");
-        getchar();
-        exit(0);
+    if (arquivo == NULL){
+        printf("Arquivo não pode ser aberto\n");
+        system("pause");
+        return exit;
     }
 
-    printf("========DIGITE SEU LOGIN E SENHA PARA MANIPULACAO DA AGENDA DIGITAL========");
+    while((fscanf(arquivo,"usuario:%s\nsenha:%s\n",&user_validar, &password_validar))!=EOF){
+        printf("usuario:%s\nsenha:%s\n", user_validar, password_validar);
+    }
 
-    // o usuário deverá digitar um login e senha.
-    printf("\n\nLOGIN: ");
-    gets(loginDigitado);
+    printf("\nUsuario: ");
+    scanf("%s",usuario_digitado);
+    printf("Senha: ");
     fflush(stdin);
+    scanf("%s",senha_digitada);
 
-	printf("\nSENHA: ");
-	gets(senhaDigitada);
-    fflush(stdin);
-
-    //condição que armazena os dados contidos no .txt nas variáveis login e senha, respectivamente
-	if ((fgets(login,10,pontarq) != NULL) && (fgets(senha,10,pontarq) != NULL)){
-
-        // condição que verifica se o login e senha contidos no .txt são iguais aos digitados. Se forem iguais, a condição levará o usuário ao menu principal.
-       if((login==loginDigitado) && (senha==senhaDigitada)){
-        printf("LOGADO");
-        system ("CLS");
-        menu_principal();
-       }
-
-        else {
-		printf("LOGIN E/OU SENHA REJEITADOS PARA MANIPULACAO DO SISTEMA.\n");
-		getchar();
-        exit(0);
+    if(arquivo != NULL){
+        while ((fscanf(arquivo,"usuario:%s\nsenha:%s\n",user_validar, password_validar))!=EOF){   
+            if(strcmp(usuario_digitado,user_validar)==0 && strcmp(senha_digitada,password_validar)==0){
+                printf("\nUsuario e senha CORRETOS :D\n");
+                system("pause");
+                fclose(arquivo);
+                return 0;
+            }else{
+                printf("\nUsuario e senha INCORRETOS D:\n");
+                printf("\nPressione qualquer tecla para prosseguir...\n");
+                system("pause");
+                return main();
+            }
         }
     }
-    //fechamento do arquivo .txt aberto
-    fclose(pontarq);
 }
 
 /* função main com a funcionalidade de chamada da função valida login, isto devido ao fato de ser necessário que primeiramente o usuário valide
 seu login para depois entrar no sistema e manipulalo*/
 int main(){
     setlocale (LC_ALL,"Portuguese");
-    add_contato();
+    valida_login();
+    return 0;
 }
