@@ -1,0 +1,37 @@
+%huff3 [script]
+%Codifica e decodifica um arquivo texto.
+%NÃO armazena os dados codificados em arquivo.
+%Assume que o espaço em arquivo para armazenamento da tabela de código
+%(variável "dict") é igual a (númemero de síbolos)x3, em "bytes".
+clear all
+fid = fopen('tsunamis.txt', 'rt'); %arquivo a ser codificado
+actualsig = fread(fid)'; %conteúdo do arquivo
+fclose(fid);
+actualsigu = unique(actualsig); %todos os símbolos presentes no arquivo
+h = hist(actualsig, actualsigu); %contagem de cada símbolo
+p = h/length(actualsig); %probabilidade de cada símbolo
+symbols = actualsigu;
+%Funções do Communications Toolbox
+[dict,avglen] = huffmandict(symbols,p); % Create dictionary.
+comp = huffmanenco(actualsig,dict); % Encode the data.
+dsig = huffmandeco(comp,dict); % Decode the Huffman code.
+ok = isequal(actualsig,dsig); % Check whether the decoding is correct.
+%Escreve em um arquivo texto os dados decodificados (para comparação
+%com os dados originais)
+fid = fopen('decoded.txt', 'wt');
+fwrite(fid, dsig, 'char');
+fclose(fid);
+3/3
+%Taxa de compactação em %
+%tc = (1 - [tamanho dos dados codif]/[tamanho dos dados orig])*100
+%Tamanho dos dados originais
+actualsigSize = length(actualsig); %tamanho em "bytes"
+%Tamanho dos dados codificados
+compSize = length(comp)/8; %size em "bytes"
+%Mas a tabela de código ("dict") deve também fazer parte
+%dos dados codificados, para que seja possível a futura
+%decodificação.
+%Supor que o armazenamento da tabela utiliza 3 bytes por símbolo
+dictSize = size(dict,1)*3; %numero de linhas de "dict" x 3
+%tc
+tc = round((1 - ((compSize+dictSize)/actualsigSize))*100)
